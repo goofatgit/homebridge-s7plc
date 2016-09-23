@@ -25,7 +25,7 @@ function S7PLCAccessory(log, config) {
 //    this.db = config['db'];
     this.service = new Service.Switch(this.name);
 
-    if (!this.db) throw new Error('You must provide a config value for db.');
+//    if (!this.db) throw new Error('You must provide a config value for db.');
 
 }
 S7PLCAccessory.prototype = {
