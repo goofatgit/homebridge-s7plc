@@ -1,0 +1,26 @@
+{
+   "bridge":{
+      "name":"Homebridge",
+      "username":"B8:27:EB:87:E6:A2",
+      "port":51826,
+      "pin":"031-45-154"
+   },
+
+    "accessories": [
+        {
+                "accessory": "FakeBulb",
+                "name": "Licht",
+                "descrition": "Ein Licht in der SPS"
+        },
+   {
+            "accessory":      "FakeBulb",
+            "name":           "Lampe",
+            "bulb_name":      "Lamp 1"
+        }
+    ],
+
+   "platforms":[
+   ]
+}
+
+
