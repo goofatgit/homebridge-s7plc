@@ -25,7 +25,7 @@ function S7PLCAccessory(log, config) {
     this.bulbName = config["bulb_name"] || this.name;
     this.binaryState = 0;
 //    this.db = config['db'];
- 
+    this.state = 0;
 
 //    if (!this.db) throw new Error('You must provide a config value for db.');
     this.log("Starting a fake S7PLC Service with name '" + this.bulbName + "'...");
@@ -51,7 +51,6 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-    var state = 0;
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
