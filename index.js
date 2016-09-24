@@ -27,16 +27,17 @@ function S7PLCAccessory(log, config) {
 //    this.db = config['db'];
     this.state = 1;
     this.dbbit = 2;
+    this.buf = Buffer.alloc(2);
 //    if (!this.db) throw new Error('You must provide a config value for db.');
     this.log("Starting a S7PLC Service with name '" + this.bulbName + "'...");
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
-    var buf = Buffer.alloc(1);
+    
     if (powerOn) {
-      buf[0] = 0;
+      this.buf[0] = 0;
     } else {
-      buf[0] = 2;
+      this.buf[0] = 2;
     }
     
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
@@ -44,6 +45,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
+       console.log(s7client.S7WLByte, s7client.S7AreaP, S7PLCAccessory.buf);
       s7client.WriteArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, S7PLCAccessory.buf, function(err) {
         if(err)
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
