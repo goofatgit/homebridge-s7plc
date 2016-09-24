@@ -32,13 +32,13 @@ function S7PLCAccessory(log, config) {
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
-   
+    
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
-        // Read the first byte from PLC process outputs...
-      s7client.DBWrite(20, 0, 1, powerOn, function(err, res) {
+        // Write the first byte from DB20...
+      s7client.DBWrite(20, 0, 1, S7PLCAccessory.On, function(err, res) {
         if(err)
           return console.log(' >> ABRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
