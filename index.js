@@ -69,7 +69,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
     });
       
     this.log("Power state is %s",this.state);
-    callback(null, state);
+    callback(null, this.state);
   };
   
 S7PLCAccessory.prototype.getServices = function() {
