@@ -31,21 +31,22 @@ function S7PLCAccessory(log, config) {
     this.log("Starting a fake S7PLC Service with name '" + this.bulbName + "'...");
 }
 
-S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
-    
+S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
+    var SollState = powerOn;
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-      s7client.DBWrite(20, 0, 1, S7PLCAccessory.On, function(err) {
+      s7client.DBWrite(20, 0, 1, S7PLCAccessory.SollState, function(err) {
         if(err)
-          return console.log(' >> ABRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
+          return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         s7client.Disconnect()
         callback(null);
       });
     });
+    callback(null);
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
