@@ -39,9 +39,9 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-      s7client.DBWrite(20, 0, 1, S7PLCAccessory.Power, function(err) {
+      s7client.DBWrite(20, 0.0, 1, S7PLCAccessory.Power, function(err) {
         if(err)
-          return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
+          return console.log(' >> DBWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         s7client.Disconnect()
         callback(null);
