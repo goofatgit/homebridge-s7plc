@@ -45,7 +45,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
           // ... and write it to stdout
         console.log(res)
         
-        S7Client.Disconnect()
+        s7client.Disconnect()
         callback(null);
       });
     });
@@ -63,7 +63,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        s7Client.Disconnect()
+        s7client.Disconnect()
         callback(null, res);
        });
       });
