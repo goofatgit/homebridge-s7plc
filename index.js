@@ -58,7 +58,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-     debug.log(this.dbbit, this.state, this.buf);
+     console.log(this.dbbit, this.state, this.buf);
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
