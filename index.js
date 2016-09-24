@@ -39,15 +39,15 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     } else {
       this.buf[0] = 2;
     }
-    console.log(this.buf, S7PLCAccessory.buf);
+    console.log(this.buf, S7PLC.buf);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-       console.log(s7client.S7AreaPA, s7client.S7WLByte, S7PLCAccessory.buf);
-      s7client.WriteArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, S7PLCAccessory.buf, function(err) {
+       console.log(s7client.S7AreaPA, s7client.S7WLByte, this.buf);
+      s7client.WriteArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, this.buf, function(err) {
         if(err)
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
@@ -59,7 +59,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-  var dbbit = 2;
+  var dbbit = this.dbbit
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
