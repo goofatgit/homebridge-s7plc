@@ -25,7 +25,7 @@ function S7PLCAccessory(log, config) {
     this.bulbName = config["bulb_name"] || this.name;
     this.binaryState = 0;
 //    this.db = config['db'];
-    this.state = 0;
+    this.state = 1;
     this.dbbit = 2;
 //    if (!this.db) throw new Error('You must provide a config value for db.');
     this.log("Starting a fake S7PLC Service with name '" + this.bulbName + "'...");
