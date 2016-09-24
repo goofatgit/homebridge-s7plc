@@ -64,6 +64,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           
           // ... and write it to Console and output
         s7client.Disconnect()
+        this.log("Power state is %s",this res);
         callback(null, res);
        });
       });
