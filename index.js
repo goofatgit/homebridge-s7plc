@@ -15,7 +15,7 @@ module.exports = function(homebridge) {
   
   // For platform plugin to be considered as dynamic platform plugin,
   // registerPlatform(pluginName, platformName, constructor, dynamic), dynamic must be true
-  homebridge.registerAccessory('homebridge-s7plc', 's7plc', S7PLCAccessory,true);
+  homebridge.registerAccessory('homebridge-s7plc', 's7plc', S7PLCAccessory, true);
 }
 
 
@@ -39,7 +39,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     } else {
       this.buf[0] = 2;
     }
-    console.log(this.buf);
+    console.log(this.buf, S7PLCAccessory.buf);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
