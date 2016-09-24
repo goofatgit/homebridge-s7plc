@@ -69,7 +69,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        console.log(s7client.S7AreaPA, s7client.S7WLByte, err, res, S7PLCAccessory.dbbit);
+        console.log(res, S7PLCAccessory.dbbit, S7PLCAccessory.state);
         s7client.Disconnect()
        });
     });
