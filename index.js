@@ -52,18 +52,18 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-    var state = 0;
-    s7client.ConnectTo('192.168.1.239', 0, 2, function(err) {
+    this.state = 0;
+    s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Read the first byte from PLC process outputs...
-      s7client.DBRead(20, 0, 1, function(err, res) {
+      s7client.DBRead(20, 0, 1, function(err, result) {
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        S7PLCAccessory.getPowerOn.state = res;
+        S7PLCAccessory.getPowerOn.state = result;
         s7client.Disconnect()
        });
     });
