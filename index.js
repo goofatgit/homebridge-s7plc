@@ -51,15 +51,21 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
+  this.bit = 2
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Read the first byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, function(err, res) {
+        
         console.log("ABRead result is: %d", res[0]);
         console.log(s7client.S7AreaPA, s7client.S7WLByte, err, res);
-        S7PLCAccessory.state = res;
+        if (res[0]&& S7PLCAccessory.bit= S7PLCAccessory.bit) then
+          S7PLCAccessory.state = 1;
+        else
+          S7PLCAccessory.state = 0;
+          
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
