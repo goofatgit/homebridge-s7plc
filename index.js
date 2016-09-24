@@ -39,6 +39,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     } else {
       this.buf[0] = 2;
     }
+    console.log(this.buf);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
