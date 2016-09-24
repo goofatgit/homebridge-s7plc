@@ -30,7 +30,7 @@ function S7PLCAccessory(log, config) {
 //    if (!this.db) throw new Error('You must provide a config value for db.');
 
 }
-S7PLCAccessory.prototype = setPowerOn: function(powerOn,callback) {
+S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
    
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err)) {
       if(err)
@@ -49,7 +49,7 @@ S7PLCAccessory.prototype = setPowerOn: function(powerOn,callback) {
       };
     };
   };
-  S7PLCAccessory.prototype = getPowerOn: function(callback) {
+  S7PLCAccessory.prototype.getPowerOn = function(callback) {
      
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err)) {
       if(err)
