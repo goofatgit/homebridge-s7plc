@@ -32,16 +32,15 @@ function S7PLCAccessory(log, config) {
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
-  var Power = 20;
   //Power = powerOn;
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-      s7client.DBWrite(20, 0, 2, S7PLCAccessory.Power, function(err) {
+      s7client.ABWrite(1, 1, S7PLCAccessory.powerOn, function(err) {
         if(err)
-          return console.log(' >> DBWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
+          return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         s7client.Disconnect()
         callback(null);
@@ -56,7 +55,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Read the first byte from PLC process outputs...
-      s7client.ABRead(0, 1, function(err, res) {
+      s7client.ABRead(1, 1, function(err, res) {
         console.log("ABRead result is: %d", res);
         S7PLCAccessory.state = res;
         if(err)
@@ -67,7 +66,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
        });
     });
       
-    this.log("Power state is %s",this.state);
+    this.log("Power state is %d",this.state);
     callback(null, this.state);
   };
   
