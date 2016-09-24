@@ -52,7 +52,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-    this.state = 0;
+    var state = 0
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
@@ -63,7 +63,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        S7PLCAccessory.getPowerOn.state = result;
+        S7PLCAccessory.state = result;
         s7client.Disconnect()
        });
     });
