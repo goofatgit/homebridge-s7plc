@@ -28,6 +28,7 @@ function S7PLCAccessory(log, config) {
  
 
 //    if (!this.db) throw new Error('You must provide a config value for db.');
+    this.log("Starting a fake S7PLC Service with name '" + this.bulbName + "'...");
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn,callback) {
