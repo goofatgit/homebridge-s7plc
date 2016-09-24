@@ -24,7 +24,6 @@ function S7PLCAccessory(log, config) {
     this.name = config['name'];
     this.bulbName = config["bulb_name"] || this.name;
     this.binaryState = 0;
-//    this.db = config['db'];
     this.state = 1;
     this.dbbit = 2;
     this.buf = Buffer.alloc(2);
