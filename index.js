@@ -60,12 +60,12 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
       s7client.ReadArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, function(err, res) {
         
         console.log("ABRead result is: %d", res[0]);
-        console.log(s7client.S7AreaPA, s7client.S7WLByte, err, res);
-        if (res[0]&& S7PLCAccessory.bit= S7PLCAccessory.bit) then
+        console.log(s7client.S7AreaPA, s7client.S7WLByte, err, res, S7PLCAccessory.bit);
+        if (res[0]&& S7PLCAccessory.bit == S7PLCAccessory.bit) {
           S7PLCAccessory.state = 1;
-        else
+        } else {
           S7PLCAccessory.state = 0;
-          
+        }
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
