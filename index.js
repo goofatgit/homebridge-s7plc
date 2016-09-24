@@ -56,9 +56,9 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Read the first byte from PLC process outputs...
-      s7client.ABRead(1, 1, function(err, result) {
-        console.log("DBRead result is: %d", result);
-        S7PLCAccessory.state = result;
+      s7client.ABRead(0, 1, function(err, res) {
+        console.log("ABRead result is: %d", res);
+        S7PLCAccessory.state = res;
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
