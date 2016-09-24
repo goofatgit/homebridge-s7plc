@@ -59,7 +59,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
       s7client.DBRead(2, 0, 1, function(err, result) {
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
-        return console.log("DBRead result ist %s",result) 
+        return console.log("DBRead result is '%s'",result) 
           // ... and write it to Console and output
         S7PLCAccessory.state = result;
         s7client.Disconnect()
