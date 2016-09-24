@@ -44,7 +44,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-      s7client.WriteArea(s7client.A7AreaPA, 0, 4, 1, s7client.S7WLByte, S7PLCAccessory.buf, function(err) {
+      s7client.WriteArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, S7PLCAccessory.buf, function(err) {
         if(err)
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
