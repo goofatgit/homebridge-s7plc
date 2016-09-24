@@ -74,7 +74,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
        });
     });
       
-    this.log("Power state is %d",this.state);
+    console.log("Power state is %d",this.state);
     callback(null, this.state);
   };
   
