@@ -39,7 +39,6 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     } else {
       this.buf[0] = 2;
     }
-    console.log(this.buf, S7PLC.buf);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
@@ -68,16 +67,16 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
       s7client.ReadArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, function(err, res) {
         
         console.log("ABRead result is: %d", res[0]);
-        if (res[0] && S7PLCAccessory.dbbit == S7PLCAccessory.dbbit) {
-          S7PLCAccessory.state = 1;
+        if (res[0] && this.dbbit == this.dbbit) {
+          this.state = 1;
         } else {
-          S7PLCAccessory.state = 0;
+          this.state = 0;
         }
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        console.log(res, S7PLCAccessory.dbbit, S7PLCAccessory.state);
+        console.log(res, this.dbbit, this.state);
         s7client.Disconnect()
        });
     });
