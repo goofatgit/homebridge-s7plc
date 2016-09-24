@@ -25,8 +25,8 @@ function S7PLCAccessory(log, config) {
     this.bulbName = config["bulb_name"] || this.name;
     this.binaryState = 0;
 //    this.db = config['db'];
-    this.state = 1;
-    this.bit =2;
+    this.state = 0;
+    this.bit = 2;
 //    if (!this.db) throw new Error('You must provide a config value for db.');
     this.log("Starting a fake S7PLC Service with name '" + this.bulbName + "'...");
 }
@@ -61,7 +61,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
         
         console.log("ABRead result is: %d", res[0]);
         console.log(s7client.S7AreaPA, s7client.S7WLByte, err, res, S7PLCAccessory.bit);
-        if (res[0]&& S7PLCAccessory.bit == S7PLCAccessory.bit) {
+        if (res[0] && S7PLCAccessory.bit == S7PLCAccessory.bit) {
           S7PLCAccessory.state = 1;
         } else {
           S7PLCAccessory.state = 0;
