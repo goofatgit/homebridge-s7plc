@@ -32,13 +32,14 @@ function S7PLCAccessory(log, config) {
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
-  //Power = powerOn;
+    var power = 20;
+    Power = powerOn;
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-      s7client.ABWrite(4, 1, S7PLCAccessory.powerOn, function(err) {
+      s7client.ABWrite(4, 2, S7PLCAccessory.Power, function(err) {
         if(err)
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
