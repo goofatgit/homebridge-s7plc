@@ -83,12 +83,13 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
+        
         console.log(res, dbbit, state);
         s7client.Disconnect()
        });
     });
-      
-    console.log("Power state of Byte %d Bit %d is %d", dbbyte, dbbit, state);
+    //this.log("Power state for the '%s' is %s", this.name, this.state);
+    this.log("Power state of Byte %d Bit %d is %d", dbbyte, dbbit, state);
     callback(null, state);
   };
   
