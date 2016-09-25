@@ -97,7 +97,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
        });
     });
     
-    this.log("Power state of Byte %d Bit %d is %d", dbrbyte, dbrbit, state);
+    this.log("Power state of Byte %d Bit %d is %d", arbyte, arbit, state);
     callback(null, state);
   };
   
