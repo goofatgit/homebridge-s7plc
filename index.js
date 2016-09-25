@@ -24,10 +24,12 @@ function S7PLCAccessory(log, config) {
     this.log = log;
     this.name = config['name'];
     this.bulbName = config["bulb_name"] || this.name;
-    this.binaryState = 0;
+    this.db = config['DB'];
+    this.dbbyte = config['WriteByte'];
+    this.dbbit = config['WriteBit'];
     this.state = 0;
-    this.dbbyte = 4;
-    this.dbbit = 2;
+    this.arbyte = config['ReadByte'];
+    this.arbit = config['ReadBit'];
     this.buf = Buffer.alloc(2);
 //    if (!this.db) throw new Error('You must provide a config value for db.');
     this.log("Starting a S7PLC Service '" + this.bulbName + "' on %d.%d", this.dbbyte, this.dbbit);
@@ -35,6 +37,7 @@ function S7PLCAccessory(log, config) {
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     var buf = this.buf;
+    var db = this.db;
     var dbbyte = this.dbbyte;
     var dbbit = this.dbbit; 
     var value = Math.pow(2, dbbit);
@@ -54,7 +57,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         
         // Write the first byte from DB20...
       // console.log(s7client.S7AreaPA, s7client.S7WLByte, buf);
-      s7client.WriteArea(s7client.S7AreaPA, 0, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
+      s7client.WriteArea(s7client.S7AreaPA, db, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
         if(err)
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
@@ -66,18 +69,18 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-  var dbbyte = this.dbbyte;
-  var dbbit = this.dbbit;
+  var arbyte = this.arbyte;
+  var arbit = this.arbit;
   var buf = this.buf;
   var state = this.state;
-  var value = Math.pow(2, dbbit);
+  var value = Math.pow(2, arbit);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Read the first byte from PLC process outputs...
-      s7client.ReadArea(s7client.S7AreaPA, 0, dbbyte, 1, s7client.S7WLByte, function(err, res) {
+      s7client.ReadArea(s7client.S7AreaPA, 0, arbyte, 1, s7client.S7WLByte, function(err, res) {
         
        // console.log("ABRead result is: %d", res[0]);
         if (res[0] && value == value) {
@@ -93,7 +96,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
        });
     });
     
-    this.log("Power state of Byte %d Bit %d is %d", dbbyte, dbbit, state);
+    this.log("Power state of Byte %d Bit %d is %d", dbrbyte, dbrbit, state);
     callback(null, state);
   };
   
