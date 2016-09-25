@@ -40,14 +40,15 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     var buf = this.buf;
     var db = this.db;
     var dbbyte = this.dbbyte;
-    var dbbit = this.dbbit; 
-    var value = Math.pow(2, dbbit);
+    //var dbbiton = this.dbbiton; 
+    //var dbbitoff = this.dbbitoff;
+    //var value = Math.pow(2, dbbit);
   
     if (powerOn) {
-      buf[0] = Math.pow(2, dbbiton);
+      buf[0] = Math.pow(2, this.dbbiton);
       this.state = 1;
     } else {
-      buf[0] = Math.pow(2, dbbitoff);
+      buf[0] = Math.pow(2, this.dbbitoff);
       this.state = 0;
     }
     //console.log(buf);
