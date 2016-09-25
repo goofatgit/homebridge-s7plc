@@ -8,9 +8,14 @@
 
     "accessories": [
         {
-                "accessory": "FakeBulb",
-                "name": "Licht",
-                "descrition": "Ein Licht in der SPS"
+           "accessory": "s7plc",
+           "name": "Licht",
+           "descrition": "Licht Wohnzimmer A1.0 gesteuert über DB20 Byte 0",
+           "DB": "20",
+           "WriteByte" : "0",
+           "WriteBit" : "0",     
+           "ReadByte" : "0",     //Ausgangsbyte der Lampe
+           "ReadBit" : "0"       //Ausgangsbit der Lampe
         },
    {
             "accessory":      "FakeBulb",
