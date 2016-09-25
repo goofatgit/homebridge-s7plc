@@ -25,6 +25,7 @@ function S7PLCAccessory(log, config) {
     this.bulbName = config["bulb_name"] || this.name;
     this.binaryState = 0;
     this.state = 1;
+    this.dbbyte = 4;
     this.dbbit = 2;
     this.buf = Buffer.alloc(2);
 //    if (!this.db) throw new Error('You must provide a config value for db.');
@@ -58,6 +59,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
+  var dbbyte = this.dbbyte;
   var dbbit = this.dbbit;
   var buf = this.buf;
   var state = this.state;
@@ -67,10 +69,9 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Read the first byte from PLC process outputs...
-      s7client.ReadArea(s7client.S7AreaPA, 0, 4, 1, s7client.S7WLByte, function(err, res) {
+      s7client.ReadArea(s7client.S7AreaPA, 0, dbbyte, 1, s7client.S7WLByte, function(err, res) {
         
         console.log("ABRead result is: %d", res[0]);
-        console.log(dbbit,state);
         if (res[0] && dbbit == dbbit) {
           state = 1;
         } else {
@@ -85,8 +86,8 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
        });
     });
       
-    console.log("Power state is %d",this.state);
-    callback(null, this.state);
+    console.log("Power state of Byte %d Bit %d is %d", dbbyte, dbbit, state);
+    callback(null, state);
   };
   
 S7PLCAccessory.prototype.getServices = function() {
