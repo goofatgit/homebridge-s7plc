@@ -37,7 +37,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     var buf = this.buf;
     var dbbyte = this.dbbyte;
     var dbbit = this.dbbit; 
-    var value = Math.Pow(2, dbbit);
+    var value = Math.pow(2, dbbit);
   
     if (powerOn) {
       buf[0] = value;
@@ -67,7 +67,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
   var dbbit = this.dbbit;
   var buf = this.buf;
   var state = this.state;
-  var value = Math.Pow(2, dbbit);
+  var value = Math.pow(2, dbbit);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
