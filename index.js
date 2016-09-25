@@ -59,6 +59,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         s7client.Disconnect()
       });
     });
+   this.log("Set power state on the '%s' to %s", this.Name, this.State);
     callback(null);
   };
   
@@ -76,7 +77,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
         // Read the first byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaPA, 0, dbbyte, 1, s7client.S7WLByte, function(err, res) {
         
-        console.log("ABRead result is: %d", res[0]);
+       // console.log("ABRead result is: %d", res[0]);
         if (res[0] && value == value) {
           state = 1;
         } else {
@@ -86,12 +87,10 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        
-        console.log(res, dbbit, state);
         s7client.Disconnect()
        });
     });
-    //this.log("Power state for the '%s' is %s", this.name, this.state);
+    
     this.log("Power state of Byte %d Bit %d is %d", dbbyte, dbbit, state);
     callback(null, state);
   };
