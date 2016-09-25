@@ -60,7 +60,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         if(err)
           return console.log(' >> DBWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
-      s7client.Disconnect()
+      //s7client.Disconnect()
       });
     });
    this.log("Set power state on the '%s' to %s", this.bulbName, this.state);
@@ -93,7 +93,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
           
           // ... and write it to Console and output
-        s7client.Disconnect()
+        //s7client.Disconnect()
        });
     });
     
