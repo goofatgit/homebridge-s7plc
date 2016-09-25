@@ -75,9 +75,9 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
         
         console.log("ABRead result is: %d", res[0]);
         if (res[0] && dbbit == dbbit) {
-          state = 1;
-        } else {
           state = 0;
+        } else {
+          state = 1;
         }
         if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
