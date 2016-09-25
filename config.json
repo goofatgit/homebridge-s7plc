@@ -14,8 +14,8 @@
            "DB": "20",
            "WriteByte" : "0",
            "WriteBit" : "0",     
-           "ReadByte" : "0",     //Ausgangsbyte der Lampe
-           "ReadBit" : "0"       //Ausgangsbit der Lampe
+           "ReadByte" : "0",     
+           "ReadBit" : "0"     
         },
    {
             "accessory":      "FakeBulb",
