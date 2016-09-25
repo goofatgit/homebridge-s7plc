@@ -59,7 +59,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         s7client.Disconnect()
       });
     });
-   this.log("Set power state on the '%s' to %s", this.Name, this.State);
+   this.log("Set power state on the '%s' to %s", this.bulbName, this.state);
     callback(null);
   };
   
