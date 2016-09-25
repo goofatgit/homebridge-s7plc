@@ -30,7 +30,7 @@ function S7PLCAccessory(log, config) {
     this.dbbit = 2;
     this.buf = Buffer.alloc(2);
 //    if (!this.db) throw new Error('You must provide a config value for db.');
-    this.log("Starting a S7PLC Service '" + this.bulbName + "' on %d.%d", dbbyte, dbbit);
+    this.log("Starting a S7PLC Service '" + this.bulbName + "' on %d.%d", this.dbbyte, this.dbbit);
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
