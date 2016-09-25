@@ -53,19 +53,18 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     }
     //console.log(buf);
   
-    if (s7client.connected()==0)then
-    {
+    
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
-    }) else {                }
+    
         // Write the first byte from DB20...
       console.log(s7client.S7AreaDB, s7client.S7WLByte, buf, db, dbbyte);
       s7client.WriteArea(s7client.S7AreaDB, db, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
         if(err)
           return console.log(' >> DBWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
-      //  s7client.Disconnect()
+      s7client.Disconnect()
       });
     });
    this.log("Set power state on the '%s' to %s", this.bulbName, this.state);
