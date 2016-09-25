@@ -24,7 +24,7 @@ function S7PLCAccessory(log, config) {
     this.name = config['name'];
     this.bulbName = config["bulb_name"] || this.name;
     this.binaryState = 0;
-    this.state = 1;
+    this.state = 0;
     this.dbbyte = 4;
     this.dbbit = 2;
     this.buf = Buffer.alloc(2);
@@ -55,7 +55,6 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         s7client.Disconnect()
-        callback(null);
       });
     });
     callback(null);
