@@ -37,13 +37,11 @@ function S7PLCAccessory(log, config) {
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
-    var buf = this.buf;
+  console.log("PO"+ this.name);  
+  var buf = this.buf;
     var db = this.db;
     var dbbyte = this.dbbyte;
-    //var dbbiton = this.dbbiton; 
-    //var dbbitoff = this.dbbitoff;
-    //var value = Math.pow(2, dbbit);
-  
+    
     if (powerOn) {
       buf[0] = Math.pow(2, this.dbbiton);
       this.state = 1;
@@ -51,8 +49,6 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
       buf[0] = Math.pow(2, this.dbbitoff);
       this.state = 0;
     }
-    //console.log(buf);
-  
     
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
@@ -72,6 +68,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
+  console.log("GP"+ this.name);
   var arbyte = this.arbyte;
   var arbit = this.arbit;
   var buf = this.buf;
