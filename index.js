@@ -26,7 +26,8 @@ function S7PLCAccessory(log, config) {
     this.bulbName = config["bulb_name"] || this.name;
     this.db = config['DB'];
     this.dbbyte = config['WriteByte'];
-    this.dbbit = config['WriteBit'];
+    this.dbbiton = config['WriteBitOn'];
+    this.dbbitoff = config['WriteBitOff'];
     this.state = 0;
     this.arbyte = config['ReadByte'];
     this.arbit = config['ReadBit'];
@@ -43,10 +44,10 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     var value = Math.pow(2, dbbit);
   
     if (powerOn) {
-      buf[0] = value;
+      buf[0] = Math.pow(2, dbbiton);
       this.state = 1;
     } else {
-      buf[0] = 0;
+      buf[0] = Math.pow(2, dbbitoff);
       this.state = 0;
     }
     //console.log(buf);
@@ -57,9 +58,9 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
         
         // Write the first byte from DB20...
       // console.log(s7client.S7AreaPA, s7client.S7WLByte, buf);
-      s7client.WriteArea(s7client.S7AreaPA, db, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
+      s7client.WriteArea(s7client.S7AreaDB, db, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
         if(err)
-          return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
+          return console.log(' >> DBWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         s7client.Disconnect()
       });
