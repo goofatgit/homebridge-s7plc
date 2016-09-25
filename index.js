@@ -41,8 +41,10 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
   
     if (powerOn) {
       buf[0] = value;
+      this.state = 1;
     } else {
       buf[0] = 0;
+      this.state = 0;
     }
     //console.log(buf);
   
