@@ -36,20 +36,21 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     var buf = this.buf;
     var dbbyte = this.dbbyte;
     var dbbit = this.dbbit; 
+    var value = math.pow(2, dbbit);
   
     if (powerOn) {
-      buf[0] = 2;
+      buf[0] = value;
     } else {
       buf[0] = 0;
     }
-    console.log(buf);
+    //console.log(buf);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
         // Write the first byte from DB20...
-       console.log(this.S7AreaPA, s7client.S7WLByte, buf);
+      // console.log(s7client.S7AreaPA, s7client.S7WLByte, buf);
       s7client.WriteArea(s7client.S7AreaPA, 0, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
         if(err)
           return console.log(' >> ABWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
@@ -65,6 +66,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
   var dbbit = this.dbbit;
   var buf = this.buf;
   var state = this.state;
+  var value = math.pow(2, dbbit);
   
     s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
       if(err)
@@ -74,7 +76,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
       s7client.ReadArea(s7client.S7AreaPA, 0, dbbyte, 1, s7client.S7WLByte, function(err, res) {
         
         console.log("ABRead result is: %d", res[0]);
-        if (res[0] && dbbit == dbbit) {
+        if (res[0] && value == value) {
           state = 1;
         } else {
           state = 0;
