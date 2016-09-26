@@ -47,4 +47,5 @@ Have fun!
 
 # Special thanks to
 Davide Nardella for creating snap7
+
 Mathias Küsel for giving us the node.js addon/wrapper for snap7
