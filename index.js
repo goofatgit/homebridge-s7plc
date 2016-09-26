@@ -14,8 +14,9 @@ module.exports = function(homebridge) {
 
 function S7PLCAccessory(log, config) {
     this.log = log;
+    this.ip = config['PLC_IP_Adr'];
     this.name = config['name'];
-    this.bulbName = config["bulb_name"] || this.name;
+    this.bulbName = config['bulb_name'] || this.name;
     this.db = config['DB'];
     this.dbbyte = config['WriteByte'];
     this.dbbiton = config['WriteBitOn'];
@@ -37,10 +38,12 @@ function S7PLCAccessory(log, config) {
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
+    var ip = this.ip;
     var buf = this.buf;
     var db = this.db;
     var dbbyte = this.dbbyte;
-  
+    var dbbit = this.dbbit;
+    
       //Set the correct Bit for the operation
     if (powerOn) {
       buf[0] = Math.pow(2, this.dbbiton);
@@ -50,54 +53,47 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
       this.state = 0;
     }
     
-    s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
+    s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
     
-        // Write the first byte from DB20...
-      console.log(s7client.S7AreaDB, s7client.S7WLByte, buf, db, dbbyte);
+            // Write one byte to DB...
       s7client.WriteArea(s7client.S7AreaDB, db, dbbyte, 1, s7client.S7WLByte, buf, function(err) {
         if(err)
           return console.log(' >> DBWrite failed. Code #' + err + ' - ' + s7client.ErrorText(err));
-        
-      //s7client.Disconnect()
       });
     });
-   this.log("Set power state on the '%s' to %s", this.bulbName, this.state);
+    
+    this.log("Set power state to %s. Set bit DB%d.DBX%d.%d", this.state, db, dbbyte, dbbit);
     callback(null);
   };
   
 S7PLCAccessory.prototype.getPowerOn = function(callback) {
-  console.log("GP"+ this.name);
-  var arbyte = this.arbyte;
-  var arbit = this.arbit;
-  var buf = this.buf;
-  var state = this.state;
-  var value = Math.pow(2, arbit);
+    var ip = this.ip;
+    var arbyte = this.arbyte;
+    var arbit = this.arbit;
+    var buf = this.buf;
+    var state = this.state;
+    var value = Math.pow(2, arbit);
   
-    s7client.ConnectTo('192.168.1.240', 0, 2, function(err) {
+    s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
         
-        // Read the first byte from PLC process outputs...
-       //console.log(s7client.S7AreaPA, s7client.S7WLByte, buf, arbyte);
+        // Read one byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaPA, 0, arbyte, 1, s7client.S7WLByte, function(err, res) {
         
-       // console.log("ABRead result is: %d", res[0]);
         if (res[0] && value == value) {
           state = 1;
         } else {
           state = 0;
         }
-        if(err)
+        
+          if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
-          
-          // ... and write it to Console and output
-        //s7client.Disconnect()
        });
     });
-    
-    this.log("Power state of Byte %d Bit %d is %d", arbyte, arbit, state);
+    this.log("Power state of A%d.%d is %d", arbyte, arbit, state);
     callback(null, state);
   };
   
