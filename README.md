@@ -18,10 +18,10 @@ So you have to take care that the DB is there
 After you used the bits to switch your output you have to reset them in the PLC like this
 
  ```
-//Bit in DB switches Output(Lamp) on
+//Bit in DB switches output on
 U DB20.DBX0.0
 S A0.5
-//Bit in DB switches Output off
+//Bit in DB switches output off
 U DB20.DBX0.1
 R A0.5
 
