@@ -28,11 +28,11 @@ function S7PLCAccessory(log, config) {
     
       //Check if everything is there to create Service correctly
     if (!this.db) throw new Error('You must provide a config value for DB.');
-    if (!this.dbbyte) throw new Error('You must provide a config value for WriteByte.');
-    if (!this.dbbiton) throw new Error('You must provide a config value for WriteBitOn.');
-    if (!this.dbbitoff) throw new Error('You must provide a config value for WriteBitOff.');
-    if (!this.arbyte) throw new Error('You must provide a config value for ReadByte.');
-    if (!this.arbit) throw new Error('You must provide a config value for ReadBit.');
+    //if (!this.dbbyte) throw new Error('You must provide a config value for WriteByte.');
+    //if (!this.dbbiton) throw new Error('You must provide a config value for WriteBitOn.');
+    //if (!this.dbbitoff) throw new Error('You must provide a config value for WriteBitOff.');
+    //if (!this.arbyte) throw new Error('You must provide a config value for ReadByte.');
+    //if (!this.arbit) throw new Error('You must provide a config value for ReadBit.');
     
     this.log("Starting a S7PLC Service '" + this.bulbName + "' on A%d.%d", this.arbyte, this.arbit);
 }
