@@ -42,15 +42,17 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     var buf = this.buf;
     var db = this.db;
     var dbbyte = this.dbbyte;
-    var dbbit = this.dbbit;
+    var dbbit;
     
       //Set the correct Bit for the operation
     if (powerOn) {
       buf[0] = Math.pow(2, this.dbbiton);
       this.state = 1;
+      dbbit = this.dbbiton;
     } else {
       buf[0] = Math.pow(2, this.dbbitoff);
       this.state = 0;
+      dbbit = this.dbbitoff;
     }
     
     s7client.ConnectTo(ip, 0, 2, function(err) {
