@@ -17,6 +17,7 @@ So you have to take care that the DB is there
 
 After you used the bits to switch your output you have to reset them in the PLC like this
 
+...
 //Bit in DB switches Output(Lamp) on
 U DB20.DBX0.0
 S A0.5
@@ -32,5 +33,5 @@ R DB20.DBX0.0
 U DB20.DBX0.1
 UN A0.5
 R DB20.DBX0.1
-
+...
 Have fun!
