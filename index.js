@@ -4,18 +4,10 @@ var s7client = new snap7.S7Client();
 
 
 module.exports = function(homebridge) {
-//  console.log("homebridge API version: " + homebridge.version);
-
-  // Accessory must be created from PlatformAccessory Constructor
-//  Accessory = homebridge.platformAccessory;
-
-  // Service and Characteristic are from hap-nodejs
+    // Service and Characteristic are from hap-nodejs
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
-//  UUIDGen = homebridge.hap.uuid;
   
-  // For platform plugin to be considered as dynamic platform plugin,
-  // registerPlatform(pluginName, platformName, constructor, dynamic), dynamic must be true
   homebridge.registerAccessory('homebridge-s7plc', 's7plc', S7PLCAccessory, true);
 }
 
@@ -28,20 +20,28 @@ function S7PLCAccessory(log, config) {
     this.dbbyte = config['WriteByte'];
     this.dbbiton = config['WriteBitOn'];
     this.dbbitoff = config['WriteBitOff'];
-    this.state = 0;
     this.arbyte = config['ReadByte'];
     this.arbit = config['ReadBit'];
     this.buf = Buffer.alloc(2);
-//    if (!this.db) throw new Error('You must provide a config value for db.');
+    this.state = 0;
+    
+      //Check if everything is there to create Service correctly
+    if (!this.db) throw new Error('You must provide a config value for DB.');
+    if (!this.dbbyte) throw new Error('You must provide a config value for WriteByte.');
+    if (!this.dbbiton) throw new Error('You must provide a config value for WriteBitOn.');
+    if (!this.dbbitoff) throw new Error('You must provide a config value for WriteBitOff.');
+    if (!this.arbyte) throw new Error('You must provide a config value for ReadByte.');
+    if (!this.arbit) throw new Error('You must provide a config value for ReadBit.');
+    
     this.log("Starting a S7PLC Service '" + this.bulbName + "' on A%d.%d", this.arbyte, this.arbit);
 }
 
 S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
-  console.log("PO"+ this.name);  
-  var buf = this.buf;
+    var buf = this.buf;
     var db = this.db;
     var dbbyte = this.dbbyte;
-    
+  
+      //Set the correct Bit for the operation
     if (powerOn) {
       buf[0] = Math.pow(2, this.dbbiton);
       this.state = 1;
