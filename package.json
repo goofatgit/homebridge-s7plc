@@ -15,6 +15,6 @@
 		"homebridge": ">=0.2.0"
 	},
 	"dependencies": {
-		"node-snap7": ">=0.0.1"
+		"node-snap7": ">=0.2.3"
 	}
 }
