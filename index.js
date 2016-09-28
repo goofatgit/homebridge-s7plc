@@ -9,6 +9,8 @@ module.exports = function(homebridge) {
   Characteristic = homebridge.hap.Characteristic;
   
   homebridge.registerAccessory('homebridge-s7plc', 's7_bulb', S7PLCAccessoryBulb, true);
+  homebridge.registerAccessory('homebridge-s7plc', 's7_tempsensor', S7PLCAccessoryTempsens, true);
+  
 }
 
 
@@ -109,3 +111,55 @@ S7PLCAccessoryBulb.prototype.getServices = function() {
     
     return [lightbulbService];
 }
+// ==================================
+
+// TempSensor
+
+//========================================
+
+function S7PLCAccessoryTempsens(log, config) {
+    this.log = log;
+    this.ip = config['PLC_IP_Adr'];
+    this.name = config['name'];
+    this.db = config['DB'];
+    this.dbbyte = config['Byte'];
+    this.buf = Buffer.alloc(4);
+    
+    this.log("Starting a S7_TempSensor Service '" + this.name + "' on DB%d.DBW%d", this.db, this.dbbyte);
+}
+
+S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
+    var ip = this.ip;
+    var dbbyte = this.dbbyte;
+    var db = this.db;
+    var buf = this.buf;
+    var value = 0;
+    
+    s7client.ConnectTo(ip, 0, 2, function(err) {
+      if(err)
+        return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
+        
+        // Read one byte from PLC process outputs...
+      s7client.ReadArea(s7client.S7AreaDB,db, dbbyte, 1, s7client.S7WLWord, function(err, res) {
+               // Calculate right Value
+          value = res[0] / 10;
+                
+          if(err)
+          return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
+       });
+    });
+    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, value);
+    callback(null, value);
+  };
+  
+S7PLCAccessoryTempsens.prototype.getServices = function() {
+    var tempsensService = new Service.TemperatureSensor(this.name);
+    
+    tempsensService
+      .getCharacteristic(Characteristic.CurrentTemperature)
+      .on('get', this.getCurrentTemp.bind(this));
+      //.on('set', this.setPowerOn.bind(this));
+    
+    return [tempsensService];
+}
+
