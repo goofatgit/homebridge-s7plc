@@ -148,7 +148,7 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
        });
     });
-    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, TempWert);
+    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, this.TempWert);
     callback(null, TempWert);
   };
   
