@@ -8,11 +8,11 @@ module.exports = function(homebridge) {
   Service = homebridge.hap.Service;
   Characteristic = homebridge.hap.Characteristic;
   
-  homebridge.registerAccessory('homebridge-s7plc', 's7plc', S7PLCAccessory, true);
+  homebridge.registerAccessory('homebridge-s7plc', 's7_bulb', S7PLCAccessoryBulb, true);
 }
 
 
-function S7PLCAccessory(log, config) {
+function S7PLCAccessoryBulb(log, config) {
     this.log = log;
     this.ip = config['PLC_IP_Adr'];
     this.name = config['name'];
@@ -34,10 +34,10 @@ function S7PLCAccessory(log, config) {
     //if (!this.arbyte) throw new Error('You must provide a config value for ReadByte.');
     //if (!this.arbit) throw new Error('You must provide a config value for ReadBit.');
     
-    this.log("Starting a S7PLC Service '" + this.bulbName + "' on A%d.%d", this.arbyte, this.arbit);
+    this.log("Starting a S7_Bulb Service '" + this.bulbName + "' on A%d.%d", this.arbyte, this.arbit);
 }
 
-S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
+S7PLCAccessoryBulb.prototype.setPowerOn = function(powerOn, callback) {
     var ip = this.ip;
     var buf = this.buf;
     var db = this.db;
@@ -70,7 +70,7 @@ S7PLCAccessory.prototype.setPowerOn = function(powerOn, callback) {
     callback(null);
   };
   
-S7PLCAccessory.prototype.getPowerOn = function(callback) {
+S7PLCAccessoryBulb.prototype.getPowerOn = function(callback) {
     var ip = this.ip;
     var arbyte = this.arbyte;
     var arbit = this.arbit;
@@ -99,7 +99,7 @@ S7PLCAccessory.prototype.getPowerOn = function(callback) {
     callback(null, state);
   };
   
-S7PLCAccessory.prototype.getServices = function() {
+S7PLCAccessoryBulb.prototype.getServices = function() {
     var lightbulbService = new Service.Lightbulb(this.name);
     
     lightbulbService
