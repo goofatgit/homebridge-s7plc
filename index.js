@@ -132,9 +132,11 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
         
         // Read one byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaDB,db, dbbyte, 1, s7client.S7WLWord, function(err, res) {
-               // Calculate right Value
+          
+          // Calculate right Value
           tempwert = (res[0] * 256 + res[1]) / 10;
-          console.log(res, tempwert);    
+          console.log(db, dbbyte, res, tempwert);   
+          
           if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
        });
