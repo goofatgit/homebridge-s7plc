@@ -134,6 +134,7 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
       s7client.ReadArea(s7client.S7AreaDB,db, dbbyte, 1, s7client.S7WLWord, function(err, res) {
           
           // Calculate right Value
+             console.log(db, dbbyte, res, tempwert); 
           tempwert = (res[0] * 256 + res[1]) / 10;
           console.log(db, dbbyte, res, tempwert);   
           
