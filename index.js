@@ -124,7 +124,7 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
     var ip = this.ip;
     var dbbyte = this.dbbyte;
     var db = this.db;
-    var tempwert = this.tempwert;
+    var tempwert = 15.3;
     
     s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
