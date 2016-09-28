@@ -143,7 +143,7 @@ S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
       s7client.ReadArea(s7client.S7AreaDB,db, dbbyte, 1, s7client.S7WLWord, function(err, res) {
                // Calculate right Value
           value = res[0] / 10;
-                
+          console.log(res ,value);    
           if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
        });
