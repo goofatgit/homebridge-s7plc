@@ -28,14 +28,6 @@ function S7PLCAccessoryBulb(log, config) {
     this.buf = Buffer.alloc(2);
     this.state = 0;
     
-      //Check if everything is there to create Service correctly
-    if (!this.db) throw new Error('You must provide a config value for DB.');
-    //if (!this.dbbyte) throw new Error('You must provide a config value for WriteByte.');
-    //if (!this.dbbiton) throw new Error('You must provide a config value for WriteBitOn.');
-    //if (!this.dbbitoff) throw new Error('You must provide a config value for WriteBitOff.');
-    //if (!this.arbyte) throw new Error('You must provide a config value for ReadByte.');
-    //if (!this.arbit) throw new Error('You must provide a config value for ReadBit.');
-    
     this.log("Starting a S7_Bulb Service '" + this.bulbName + "' on A%d.%d", this.arbyte, this.arbit);
 }
 
@@ -111,10 +103,11 @@ S7PLCAccessoryBulb.prototype.getServices = function() {
     
     return [lightbulbService];
 }
+
+
+
 // ==================================
-
 // TempSensor
-
 //========================================
 
 function S7PLCAccessoryTempsens(log, config) {
@@ -124,7 +117,7 @@ function S7PLCAccessoryTempsens(log, config) {
     this.db = config['DB'];
     this.dbbyte = config['Byte'];
     this.buf = Buffer.alloc(4);
-    this.TempWert = 10.0;
+    this.state = 10.0;
     this.log("Starting a S7_TempSensor Service '" + this.name + "' on DB%d.DBW%d", this.db, this.dbbyte);
 }
 
@@ -133,7 +126,7 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
     var dbbyte = this.dbbyte;
     var db = this.db;
     var buf = this.buf;
-    var TempWert = this.TempWert;
+    var state = this.state;
     
     s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
@@ -142,14 +135,14 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
         // Read one byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaDB,db, dbbyte, 1, s7client.S7WLWord, function(err, res) {
                // Calculate right Value
-          TempWert = (res[0] * 256 + res[1]) / 10;
-          console.log(res ,TempWert);    
+          state = (res[0] * 256 + res[1]) / 10;
+          console.log(res, state);    
           if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
        });
     });
-    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, this.TempWert);
-    callback(null, TempWert);
+    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, state);
+    callback(null, state);
   };
   
 S7PLCAccessoryTempsens.prototype.getServices = function() {
