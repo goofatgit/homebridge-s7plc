@@ -133,7 +133,7 @@ S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
     var dbbyte = this.dbbyte;
     var db = this.db;
     var buf = this.buf;
-    var value = 0;
+    var value = 1000;
     
     s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
