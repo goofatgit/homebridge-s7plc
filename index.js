@@ -124,7 +124,7 @@ function S7PLCAccessoryTempsens(log, config) {
     this.db = config['DB'];
     this.dbbyte = config['Byte'];
     this.buf = Buffer.alloc(4);
-    
+    this.value = 10.0;
     this.log("Starting a S7_TempSensor Service '" + this.name + "' on DB%d.DBW%d", this.db, this.dbbyte);
 }
 
@@ -133,7 +133,7 @@ S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
     var dbbyte = this.dbbyte;
     var db = this.db;
     var buf = this.buf;
-    var value = 1000;
+    var value = this.value;
     
     s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
