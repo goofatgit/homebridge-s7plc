@@ -64,7 +64,7 @@ S7PLCAccessoryBulb.prototype.setPowerOn = function(powerOn, callback) {
     callback(null);
   };
   
-S7PLCAccessoryBulb.prototype.getPowerOn = function() {
+S7PLCAccessoryBulb.prototype.getPowerOn = function(callback) {
     var ip = this.ip;
     var arbyte = this.arbyte;
     var arbit = this.arbit;
@@ -92,7 +92,7 @@ S7PLCAccessoryBulb.prototype.getPowerOn = function() {
        });
     });
     this.log("Power state of A%d.%d is %d", arbyte, arbit, state);
-    return(null, state);
+    callback(null, state);
   };
   
 S7PLCAccessoryBulb.prototype.getServices = function() {
