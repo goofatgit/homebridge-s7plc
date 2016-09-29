@@ -79,7 +79,7 @@ S7PLCAccessoryBulb.prototype.getPowerOn = function(callback) {
         // Read one byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaPA, 0, arbyte, 1, s7client.S7WLByte, function(err, res) {
         
-        if ((res[0] && value) == value) {
+        if ((res[0] && value) === value) {
           state = 1;
         } else {
           state = 0;
