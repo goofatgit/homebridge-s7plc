@@ -139,9 +139,10 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
           console.log('1:', db, dbbyte, res, tempwert); 
           tempwert = (res[0] * 256 + res[1]) / 10;
           console.log('2:', db, dbbyte, res, tempwert);   
-           
+          return(tempwert); 
       });
-    console.log('3:', tempwert);    
+    console.log('3:', tempwert);  
+    return(tempwert);    
     });
     this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, tempwert);
     callback(null, tempwert);
@@ -153,7 +154,7 @@ S7PLCAccessoryTempsens.prototype.getServices = function() {
     tempsensService
       .getCharacteristic(Characteristic.CurrentTemperature)
       .on('get', this.getState.bind(this));
-      //.on('set', this.setPowerOn.bind(this));
+
     
     return [tempsensService];
 }
