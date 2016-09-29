@@ -84,7 +84,8 @@ S7PLCAccessoryBulb.prototype.getPowerOn = function(callback) {
         } else {
           state = 0;
         }
-        
+        console.log(state);
+          
           if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
        });
