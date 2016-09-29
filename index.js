@@ -140,7 +140,7 @@ S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
       
           // Calculate right Value
           console.log('1:', db, dbbyte, res, that.tempwert); 
-          tempwert = (res[0] * 256 + res[1]) / 10;
+          that.tempwert = (res[0] * 256 + res[1]) / 10;
           console.log('2:', db, dbbyte, res, that.tempwert);   
       });
     console.log('3:', that.tempwert);     
