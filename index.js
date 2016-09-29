@@ -37,7 +37,7 @@ S7PLCAccessoryBulb.prototype.setPowerOn = function(powerOn, callback) {
     var db = this.db;
     var dbbyte = this.dbbyte;
     var dbbit;
-    
+       
       //Set the correct Bit for the operation
     if (powerOn) {
       buf[0] = Math.pow(2, this.dbbiton);
@@ -71,7 +71,8 @@ S7PLCAccessoryBulb.prototype.getPowerOn = function(callback) {
     var buf = this.buf;
     var state = this.state;
     var value = Math.pow(2, arbit);
-  
+    var that = this;
+    
     s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
         return console.log(' >> Connection failed. Code #' + err + ' - ' + s7client.ErrorText(err));
@@ -80,11 +81,11 @@ S7PLCAccessoryBulb.prototype.getPowerOn = function(callback) {
       s7client.ReadArea(s7client.S7AreaPA, 0, arbyte, 1, s7client.S7WLByte, function(err, res) {
         
         if ((res[0] & value) == value) {
-          state = 1;
+          that.state = 1;
         } else {
-          state = 0;
+          that.state = 0;
         }
-        console.log(res[0]+" %d | A%d.%d: %d", value, arbyte, arbit, state);
+        console.log(res[0]+" %d | A%d.%d: %d", value, arbyte, arbit, that.state);
           
           if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
@@ -126,6 +127,7 @@ S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
     var dbbyte = this.dbbyte;
     var db = this.db;
     var tempwert = 15.3;
+    var that = this;
     
     s7client.ConnectTo(ip, 0, 2, function(err) {
       if(err)
@@ -137,11 +139,11 @@ S7PLCAccessoryTempsens.prototype.getCurrentTemp = function(callback) {
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
       
           // Calculate right Value
-          console.log('1:', db, dbbyte, res, tempwert); 
+          console.log('1:', db, dbbyte, res, that.tempwert); 
           tempwert = (res[0] * 256 + res[1]) / 10;
-          console.log('2:', db, dbbyte, res, tempwert);   
+          console.log('2:', db, dbbyte, res, that.tempwert);   
       });
-    console.log('3:', tempwert);     
+    console.log('3:', that.tempwert);     
     });
     this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, tempwert);
     callback(null, tempwert);
