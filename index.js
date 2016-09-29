@@ -116,7 +116,7 @@ function S7PLCAccessoryTempsens(log, config) {
     this.name = config['name'];
     this.db = config['DB'];
     this.dbbyte = config['Byte'];
-    this.tempwert = 14.3;
+    //this.tempwert = 14.3;
     this.log("Starting a S7_TempSensor Service '" + this.name + "' on DB%d.DBW%d", this.db, this.dbbyte);
 }
 
@@ -132,18 +132,18 @@ S7PLCAccessoryTempsens.prototype.getState = function(callback) {
         
         // Read one byte from PLC process outputs...
       s7client.ReadArea(s7client.S7AreaDB,db, dbbyte, 1, s7client.S7WLWord, function(err, res) {
-          
-          // Calculate right Value
-             console.log('1:', db, dbbyte, res, tempwert); 
-          tempwert = (res[0] * 256 + res[1]) / 10;
-          console.log('2:', db, dbbyte, res, tempwert);   
-          
           if(err)
           return console.log(' >> DBRead failed. Code #' + err + ' - ' + s7client.ErrorText(err));
-       });
-    console.log('3:', S7PLCAccessoryTempsens.tempwert);    
+      
+          // Calculate right Value
+          console.log('1:', db, dbbyte, res, tempwert); 
+          tempwert = (res[0] * 256 + res[1]) / 10;
+          console.log('2:', db, dbbyte, res, tempwert);   
+           
+      });
+    console.log('3:', tempwert);    
     });
-    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, this.tempwert);
+    this.log("Temp Value of DB%d.DBW%d is %d", db, dbbyte, tempwert);
     callback(null, tempwert);
   };
   
