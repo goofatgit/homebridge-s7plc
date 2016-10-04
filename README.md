@@ -4,11 +4,13 @@ homebridge plugin for S7 PLC connect
 
 Connects homebridge with Siemens S7 PLC
 
-Create Lamp Accessories which will act like Homebridge devices.
+1. Create Lamp Accessories which will act like Homebridge devices.
 
 Devices are controlled via a DB in the PLC.
 
 Homebridge will check the Output of PLC to get the actual state when you start the app on your phone.
+
+2. Create Temperature Sensoers that will show actual Temperature
 
 # to install this plugin
 
@@ -43,6 +45,9 @@ U DB20.DBX0.1
 UN A0.5
 R DB20.DBX0.1
  ```
+for the Temperture the Value has to be an int like 231 for 23.1°C the division will be done in the software (Note that under Home in IOS 10 the temperature shown has no decimal place). Just give the DB Number and the startadress of the word like DB99.DBW2 as shown in the config-sample.json. 
+
+
 Have fun!
 
 # Special thanks to
