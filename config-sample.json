@@ -21,6 +21,7 @@
         },
    {
            "accessory": "s7bulb",
+           "PLC_IP_Adr": "192.168.1.200",
            "name": "Licht 2",
            "descrition": "Licht Bad A0.3 gesteuert über DB20 Byte 2",
            "DB": 20,
@@ -32,10 +33,11 @@
         },
          {
            "accessory": "s7tempsens",
+           "PLC_IP_Adr": "192.168.1.200",
            "name": "Temp WZ",
            "descrition": "Temperatur Wohnzimmer DB99.DBW12",
            "DB": 99,
-           "ReadByte" : 12,
+           "ReadByte" : 12
         }
     ],
 
